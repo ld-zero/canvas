@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'canvas.dart';
+import 'model/drawing_config.dart';
+import 'bottom_menu.dart';
 
 class DrawingPanel extends StatelessWidget {
+  DrawingConfig config = DrawingConfig();
+  UserCanvas canvas = UserCanvas();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -12,12 +17,15 @@ class DrawingPanel extends StatelessWidget {
               child: Card(
             margin: EdgeInsets.only(left: 10, top: 10, right: 10),
             color: Colors.white,
-            child: UserCanvas(),
+            child: canvas,
           )),
           Container(
             margin: EdgeInsets.all(10),
             child: MaterialButton(
-              onPressed: () => openMenu(),
+              onPressed: () => showCanvasMenu(context, config, (newConfig) {
+                    config.strokeWidth = newConfig.strokeWidth;
+                    canvas.updateDrawingConfig(config);
+                  }),
               elevation: 4,
               color: Colors.white,
               child: Container(
@@ -36,6 +44,4 @@ class DrawingPanel extends StatelessWidget {
       ),
     );
   }
-
-  void openMenu() {}
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'model/drawingConfig.dart';
+import 'model/drawing_config.dart';
 
 class UserCanvas extends StatefulWidget {
   DrawingConfig _config = DrawingConfig();
@@ -23,7 +23,7 @@ class CanvasState extends State<UserCanvas> {
     return GestureDetector(
       onPanStart: (dragStartDetails) {
         DrawingConfig config = widget._config;
-        Line newLine = Line(config.width);
+        Line newLine = Line(config.strokeWidth);
         Offset localPosition =
             globalPositionToLocalPosition(dragStartDetails.globalPosition);
         newLine.path.moveTo(localPosition.dx, localPosition.dy);
