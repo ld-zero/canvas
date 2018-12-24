@@ -53,6 +53,7 @@ class UserPainter extends CustomPainter {
     canvas.clipRect(Rect.fromLTRB(0, 0, size.width, size.height));
     Paint paint = Paint()
       ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round
       ..style = PaintingStyle.fill
       ..color = Colors.white
       ..isAntiAlias = true;
