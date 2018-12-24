@@ -3,15 +3,35 @@ import 'model/drawing_config.dart';
 
 class UserCanvas extends StatefulWidget {
   DrawingConfig _config = DrawingConfig();
+  CanvasState _state = CanvasState();
 
   @override
-  CanvasState createState() => CanvasState();
+  CanvasState createState() => _state;
 
   void updateDrawingConfig(DrawingConfig config) => _config = config;
+
+  void cancelLine() => _state.cancelLine();
+
+  void restoreLine() => _state.restoreLine();
 }
 
 class CanvasState extends State<UserCanvas> {
   List<Line> lines = List();
+  List<Line> cancelLines = List();
+
+  void cancelLine() {
+    if (lines.length > 0) {
+      cancelLines.add(lines.removeLast());
+      setState(() {});
+    }
+  }
+
+  void restoreLine() {
+    if (cancelLines.length > 0) {
+      lines.add(cancelLines.removeLast());
+      setState(() {});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +48,7 @@ class CanvasState extends State<UserCanvas> {
             globalPositionToLocalPosition(dragStartDetails.globalPosition);
         newLine.path.moveTo(localPosition.dx, localPosition.dy);
         lines.add(newLine);
+        cancelLines.clear();
         setState(() {});
       },
       onPanUpdate: (dragUpdateDetails) {
@@ -37,7 +58,9 @@ class CanvasState extends State<UserCanvas> {
         line.path.lineTo(localPosition.dx, localPosition.dy);
         setState(() {});
       },
-      child: CustomPaint(size: Size(double.infinity, double.infinity),painter: UserPainter(lines)),
+      child: CustomPaint(
+          size: Size(double.infinity, double.infinity),
+          painter: UserPainter(lines)),
     );
   }
 }

@@ -23,23 +23,28 @@ class DrawingPanel extends StatelessWidget {
             margin: EdgeInsets.all(10),
             child: Row(
               children: <Widget>[
-                IconButton(icon: Icon(Icons.arrow_back), onPressed: () {}),
-                Expanded(child: MaterialButton(
+                IconButton(
+                    icon: Icon(Icons.arrow_back),
+                    onPressed: () => canvas.cancelLine()),
+                Expanded(
+                    child: MaterialButton(
                   onPressed: () => showCanvasMenu(context, config, (newConfig) {
-                    config.strokeWidth = newConfig.strokeWidth;
-                    canvas.updateDrawingConfig(config);
-                  }),
+                        config.strokeWidth = newConfig.strokeWidth;
+                        canvas.updateDrawingConfig(config);
+                      }),
                   elevation: 4,
                   color: Colors.white,
                   child: Center(
                     child: Text(
                       'Open menu',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 15),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                     ),
                   ),
                 )),
-                IconButton(icon: Icon(Icons.arrow_forward), onPressed: () {}),
+                IconButton(
+                    icon: Icon(Icons.arrow_forward),
+                    onPressed: () => canvas.restoreLine()),
               ],
             ),
           ),
